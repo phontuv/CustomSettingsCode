@@ -16,6 +16,10 @@ public class PrototypeDriving extends LinearOpMode {
     private DcMotor bl;
     private DcMotor fr;
     private DcMotor arm;
+    private DcMotor bar;
+    private Servo leftServo;
+    private Servo rightServo;
+    private Servo grabberServo;
     private int speed = 1;
     private int mode = 0;
 
@@ -30,6 +34,11 @@ public class PrototypeDriving extends LinearOpMode {
         bl = hardwareMap.get(DcMotor.class, "bl");
         fr = hardwareMap.get(DcMotor.class, "fr");
         arm = hardwareMap.get(DcMotor.class, "arm");
+        bar = hardwareMap.get(DcMotor.class, "bar");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
+        grabberServo = hardwareMap.get(Servo.class, "grabberServo");
+
 
         // Put initialization blocks here.
         // br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -77,6 +86,35 @@ public class PrototypeDriving extends LinearOpMode {
                     ((DcMotorEx) arm).setVelocity(-537.6 * 1);
                 }else{
                     ((DcMotorEx) arm).setVelocity(0);
+                }
+
+                if(gamepad1.left_bumper) {
+                    leftServo.setPosition(leftServo.getPosition() + 0.01);
+                    rightServo.setPosition(rightServo.getPosition() - 0.01);
+                } else if(gamepad1.right_bumper){
+                    leftServo.setPosition(leftServo.getPosition() + 0.01);
+                    rightServo.setPosition(rightServo.getPosition() - 0.01);
+                }
+
+                if(gamepad1.left_trigger != 0){
+                    grabberServo.setPosition(grabberServo.getPosition() + (gamepad1.left_trigger / 100));
+                } else if (gamepad1.right_trigger != 0){
+                    grabberServo.setPosition(grabberServo.getPosition() - (gamepad1.right_trigger / 100));
+                }
+
+                if(gamepad1.dpad_up){
+                    bar.setPower(1);
+                }else if (gamepad1.dpad_down){
+                    bar.setPower(-1);
+                }else{
+                    bar.setPower(0);
+                }
+
+                if(gamepad1.x){
+                    speed = 1;
+                }
+                if(gamepad1.y){
+                    speed = 2;
                 }
 
                 telemetry.addData("fl", fl.getCurrentPosition());
