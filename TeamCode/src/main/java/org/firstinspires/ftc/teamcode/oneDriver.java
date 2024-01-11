@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "drivingproto")
-public class PrototypeDriving extends LinearOpMode {
+@TeleOp(name = "One Driver")
+public class oneDriver extends LinearOpMode {
 
     private DcMotor br;
     private DcMotor fl;

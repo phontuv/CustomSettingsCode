@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "drivingproto")
-public class PrototypeDriving extends LinearOpMode {
+@TeleOp(name = "Two Drivers")
+public class twoDriver extends LinearOpMode {
 
     private DcMotor br;
     private DcMotor fl;
@@ -91,9 +91,9 @@ public class PrototypeDriving extends LinearOpMode {
 
                 //arm extension
 
-                if(gamepad1.a && arm.getCurrentPosition() > -15700){
+                if(gamepad2.a && arm.getCurrentPosition() > -15700){
                     ((DcMotorEx) arm).setVelocity(537.6 * 1);
-                }else if (gamepad1.b && arm.getCurrentPosition() < -100){
+                }else if (gamepad2.b && arm.getCurrentPosition() < -100){
                     ((DcMotorEx) arm).setVelocity(-537.6 * 1);
                 }else{
                     ((DcMotorEx) arm).setVelocity(0);
@@ -101,47 +101,50 @@ public class PrototypeDriving extends LinearOpMode {
 
                 //grabber open and close
 
-                if(gamepad1.left_bumper) {
+                if(gamepad2.left_bumper) {
                     leftServo.setPosition(leftServo.getPosition() + 0.01);
                     rightServo.setPosition(rightServo.getPosition() - 0.01);
-                } else if(gamepad1.right_bumper && leftServo.getPosition() > 0.01){
+                } else if(gamepad2.right_bumper && leftServo.getPosition() > 0.01){
                     leftServo.setPosition(leftServo.getPosition() - 0.01);
                     rightServo.setPosition(rightServo.getPosition() + 0.01);
                 }
 
                 //tilting
 
-                if(gamepad1.right_trigger != 0){
-                    grabberServo.setPosition(grabberServo.getPosition() + (gamepad1.right_trigger / 200));
-                } else if (gamepad1.left_trigger != 0){
-                    grabberServo.setPosition(grabberServo.getPosition() - (gamepad1.left_trigger / 200));
+                if(gamepad2.right_trigger != 0){
+                    grabberServo.setPosition(grabberServo.getPosition() + (gamepad2.right_trigger / 200));
+                } else if (gamepad2.left_trigger != 0){
+                    grabberServo.setPosition(grabberServo.getPosition() - (gamepad2.left_trigger / 200));
                 }
 
                 //actuator extension
 
-                if(gamepad1.dpad_up){
+                if(gamepad2.dpad_up){
                     bar.setPower(1);
                     if(barServo.getPosition() > 0.7){
                         barServo.setPosition(barServo.getPosition() - 0.01);
                     }
 
-                }else if (gamepad1.dpad_down){
+                }else if (gamepad2.dpad_down){
                     bar.setPower(-1);
                 }else{
                     bar.setPower(0);
                 }
 
-                if(gamepad1.dpad_right){
+                if(gamepad2.dpad_right){
                     barServo.setPosition(barServo.getPosition() + 0.01);
                 }
 
                 //speed control
 
-                if(gamepad1.x){
+                if(gamepad1.a){
                     speed = 0.5;
                 }
+                if(gamepad1.b){
+                    speed = 1;
+                }
                 if(gamepad1.y){
-                    speed = 1.5;
+                    speed = 2;
                 }
 
                 telemetry.addData("fl", fl.getCurrentPosition());
